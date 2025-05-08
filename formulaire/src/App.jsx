@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Input from './Components/Input/Input';
+import { Rating } from 'react-simple-star-rating'
+import Select from './Components/Select/Select';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [name, setName] = useState("");
+  const [select, setSelect] = useState("")
+  const [comment, setComment] = useState("")
+  const [file,setFile]= useState()
 
+  function handleChangeFile(e) {
+    console.log(e.target.files);
+    setFile(URL.createObjectURL(e.target.files[0]));
+}
+  const handleName = (e) => {
+    setName(e.target.value);
+  };
+
+  const handleChangeComment = (e) => {
+    setComment(e.target.value);
+  }
+
+  handleChangeFile
   return (
-    <>
+    <div>
+      <Input
+        type="text"
+        value={name}
+        placeholder="Votre nom :"
+        handleChange={handleName}
+      />
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+
+        <label>
+          Rate  :
+          <select name="selectedRating" defaultValue="1">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+
+          </select>
+        </label>
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+
+
+      <div>
+        <textarea
+          value={comment}
+          placeholder={"Write ur comment"}
+          onChange={handleChangeComment}
+
+        />
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      <div>
+        <h2>Add image:</h2>
+        <input type="file" onChange={handleChangeFile} />
+        <img src={file} />
+      </div>
+
+    </div>
+
+
+
+
+
   )
 }
 
-export default App
+export default App;
